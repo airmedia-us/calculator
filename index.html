@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+<script>
+$("#calculate").click(showThing);
+
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function showThing() {
+  $("#results").html("")
+  var A = document.getElementById("day_rate").value;
+  var B = document.getElementById("salary").value;
+  var C = document.getElementById("overhead").value;
+
+  var regex = /[%$,]/gi;
+  var sal = B.replace(regex, '');
+  var day = A.replace(regex, '');
+  var ovr = C.replace(regex, '');
+  var ovr = (1 + (ovr / 100));
+
+  var msg = "";
+
+
+  if (isNumber(sal)) {
+  	let day_rate =  ((sal * ovr)/232)
+    day_rate = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(day_rate)
+
+    msg += "<p>A salary of $" + sal + " is comparable to a day rate of " + day_rate + " for an independent contractor. </p>"
+  } else if (sal.length > 0) {
+      msg += "<p>🤔 <b>" + sal + "</b> doesn't look like a number. </p>"
+  } else if (sal === "") {
+  	console.log("Salary was not supplied.")
+  }
+
+  if (isNumber(day)) {
+  	let salary = ((day * 232)/ovr)
+    salary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary)
+
+    msg += "<p>A day rate of $" + day + " is comparable to a salary of " + salary + " with costs like payroll taxes taken into account.</p>"
+  } else if (day.length > 0) {
+      msg += "<p>🤔 <b>" + day + "</b> doesn't look like a number. </p>"
+  } else if (day === "") {
+  	console.log("Day Rate was not supplied.")
+  }
+  
+  $("#results").append(msg)
+}
+
+</script>
+<body>
+
+    Overhead <input type='number' id='overhead' name="overhead"
+    min="8" max="100"  value='26' step="0.5"
+     />% <abbr title="We recommend 26%, but you can change that. You'll need at least 8% to cover the employer's share of payroll taxes.">❔</abbr> <br /><br />
+
+    <div class="tooltip">
+    Day Rate <input type='text' id='day_rate' />
+    <span class="tooltiptext">Enter a day rate to calculate the commensurate day rate. </span>
+    </div>
+    
+    <div class="tooltip">
+    Salary <input type='number' id='salary' />
+    <span class="tooltiptext">Enter a salary to calculate the commensurate day rate. </span>
+   
+    </div>
+    
+    <button type="button" id="calculate">Calculate</button>
+
+
+    <div id="results">
+      <!--javascript will write items here-->
+    </div>
+
+
+<h2>Tooltip</h2>
+<p>Move the mouse over the text below:</p>
+
+<div class="tooltip">Hover over me
+  <span class="tooltiptext">Tooltip text</span>
+
+
+</body>
+</html>
