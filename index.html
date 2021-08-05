@@ -122,7 +122,7 @@
           currency: 'USD'
         }).format(day_rate)
 
-        msg += "<p>A salary of $" + sal + " is comparable to a day rate of " + day_rate + " for an independent contractor. </p>"
+        msg += "<p>➡️ A salary of $" + sal + " is comparable to a day rate of " + day_rate + " for an independent contractor. </p>"
       } else if (sal.length > 0) {
         msg += "<p>🤔 <b>" + sal + "</b> doesn't look like a number. </p>"
       } else if (sal === "") {
@@ -136,7 +136,7 @@
           currency: 'USD'
         }).format(salary)
 
-        msg += "<p>A day rate of $" + day + " is comparable to a salary of " + salary + " with costs like payroll taxes taken into account.</p>"
+        msg += "<p>➡️  A day rate of $" + day + " is comparable to a salary of " + salary + " with only minimal costs (eg. payroll taxes) taken into account.</p>"
       } else if (day.length > 0) {
         msg += "<p>🤔 <b>" + day + "</b> doesn't look like a number. </p>"
       } else if (day === "") {
