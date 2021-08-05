@@ -67,6 +67,9 @@
   
   Overhead <input type='number' id='overhead' name="overhead" min="8" max="100" value='26' step="0.5" />%
   <br /><br />
+    
+  Working Days <input type='number' id='workdays' name="workdays" min="1" max="366" value='231' step="1" />
+  <br /><br />
 
   <div class="tooltip">
     Day Rate <input type='text' id='day_rate' />
@@ -100,9 +103,11 @@
       var A = document.getElementById("day_rate").value;
       var B = document.getElementById("salary").value;
       var C = document.getElementById("overhead").value;
+      var D = document.getElementById("workdays").value;
 
       var regex = /[%$,]/gi;
       var sal = B.replace(regex, '');
+      var workdays = D.replace(regex, '');
       var day = A.replace(regex, '');
       var ovr = C.replace(regex, '');
       var ovr = (1 + (ovr / 100));
@@ -111,7 +116,7 @@
 
 
       if (isNumber(sal)) {
-        let day_rate = ((sal * ovr) / 232)
+        let day_rate = ((sal * ovr) / workdays)
         day_rate = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD'
@@ -125,7 +130,7 @@
       }
 
       if (isNumber(day)) {
-        let salary = ((day * 232) / ovr)
+        let salary = ((day * workdays) / ovr)
         salary = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD'
