@@ -1,3 +1,2 @@
 # Calculator
-
-This is a work in progress. 
+See https://airmedia.org/tools/day-rate-calculator
